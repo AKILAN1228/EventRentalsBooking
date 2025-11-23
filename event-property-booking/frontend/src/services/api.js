@@ -1,7 +1,7 @@
 // import axios from 'axios';
 
 // const API = axios.create({
-//   baseURL: process.env.REACT_APP_API_URL || 'http://localhost:5000/api',
+//   baseURL: process.env.REACT_APP_API_URL || 'https://eventrentalsbooking.onrender.com/api',
 // });
 
 // // Add token to requests
@@ -14,7 +14,7 @@
 // });
 
 // export default API;
-const API_BASE = 'http://localhost:5000/api';
+const API_BASE = 'https://eventrentalsbooking.onrender.com/api';
 
 // Get token from localStorage
 const getToken = () => {

@@ -8,7 +8,7 @@ import { Visibility, VisibilityOff, CheckCircle, Cancel } from '@mui/icons-mater
 import EventIcon from '@mui/icons-material/Event';
 
 // API Service
-const API_BASE = 'http://localhost:5000/api';
+const API_BASE = 'https://eventrentalsbooking.onrender.com/api';
 
 const apiService = {
   register: async (userData) => {

@@ -624,7 +624,7 @@ const AdminDashboard = () => {
   const loadBookings = async () => {
     try {
       setLoading(true);
-      const response = await fetch('http://localhost:5000/api/bookings');
+      const response = await fetch('https://eventrentalsbooking.onrender.com/api/bookings');
       if (response.ok) {
         const data = await response.json();
         setBookings(data);
@@ -652,7 +652,7 @@ const AdminDashboard = () => {
   // ✅ UPDATED: Update booking status in MongoDB
   const updateBookingStatusInDB = async (bookingId, newStatus) => {
     try {
-      const response = await fetch(`http://localhost:5000/api/bookings/${bookingId}/status`, {
+      const response = await fetch(`https://eventrentalsbooking.onrender.com/api/bookings/${bookingId}/status`, {
         method: 'PUT',
         headers: {
           'Content-Type': 'application/json',
@@ -678,7 +678,7 @@ const AdminDashboard = () => {
   const deleteBookingFromDB = async (bookingId) => {
     try {
       // Note: You'll need to add a DELETE route in your backend
-      const response = await fetch(`http://localhost:5000/api/bookings/${bookingId}`, {
+      const response = await fetch(`https://eventrentalsbooking.onrender.com/api/bookings/${bookingId}`, {
         method: 'DELETE',
       });
 
