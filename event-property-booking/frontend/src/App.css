@@ -1,0 +1,43 @@
+/* Add to App.css */
+@keyframes pulse {
+  0%, 100% {
+    transform: scale(1);
+    box-shadow: 0 8px 32px rgba(25, 118, 210, 0.1);
+  }
+  50% {
+    transform: scale(1.01);
+    box-shadow: 0 12px 40px rgba(25, 118, 210, 0.2);
+  }
+}
+
+/* Tamil font support */
+@import url('https://fonts.googleapis.com/css2?family=Noto+Sans+Tamil:wght@400;500;600;700&display=swap');
+
+.tamil-text {
+  font-family: 'Noto Sans Tamil', sans-serif;
+}
+
+/* Global styles */
+body {
+  margin: 0;
+  padding: 0;
+  font-family: 'Inter', 'Segoe UI', 'Noto Sans Tamil', sans-serif;
+  background-color: #ffffff;
+  color: #333;
+}
+
+/* Card hover effects */
+.MuiCard-root {
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1) !important;
+}
+
+/* Button styles */
+.MuiButton-root {
+  text-transform: none !important;
+  border-radius: 8px !important;
+}
+
+/* Chip styles */
+.MuiChip-root {
+  font-weight: 600 !important;
+}
