@@ -41,7 +41,7 @@ const UserLogin = () => {
       if (data.user.isAdmin) {
         navigate('/admin-dashboard');
       } else {
-        navigate('/home');
+        navigate('/categories');
       }
     }, 1000);
   };
