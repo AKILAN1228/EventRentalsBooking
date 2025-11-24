@@ -1,25 +1,3 @@
-// // const mongoose = require('mongoose');
-
-// // const userSchema = new mongoose.Schema({
-// //   name: { type: String, required: true },
-// //   email: { type: String, required: true, unique: true },
-// //   password: { type: String, required: true },
-// // }, { timestamps: true });
-
-// // module.exports = mongoose.model('User', userSchema);
-// const mongoose = require('mongoose');
-
-// const userSchema = new mongoose.Schema({
-//   name: { type: String, required: true },
-//   email: { type: String, required: true, unique: true },
-//   phone: { type: String, required: true },
-//   password: { type: String, required: true },
-//   isAdmin: { type: Boolean, default: false }, // Admin-a illaya nu therinjikka
-// }, {
-//   timestamps: true // Created time automatic-a varum
-// });
-
-// module.exports = mongoose.model('User', userSchema);
 const mongoose = require('mongoose');
 const bcrypt = require('bcryptjs');
 
@@ -37,7 +15,7 @@ const userSchema = mongoose.Schema({
     type: String,
     required: true
   },
-  phone: {
+  mobile: {  // Changed from 'phone' to 'mobile' to match Frontend
     type: String,
     required: true
   },
@@ -49,7 +27,7 @@ const userSchema = mongoose.Schema({
   timestamps: true
 });
 
-// Password hashing
+// Password hashing (Save பண்ணும் முன் பாஸ்வேர்டை மறைத்து வைக்கும்)
 userSchema.pre('save', async function (next) {
   if (!this.isModified('password')) {
     next();
@@ -58,7 +36,7 @@ userSchema.pre('save', async function (next) {
   this.password = await bcrypt.hash(this.password, salt);
 });
 
-// Password comparison
+// Password comparison (Login செய்யும் போது செக் பண்ண)
 userSchema.methods.matchPassword = async function (enteredPassword) {
   return await bcrypt.compare(enteredPassword, this.password);
 };
