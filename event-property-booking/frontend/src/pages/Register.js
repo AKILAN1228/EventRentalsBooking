@@ -7,7 +7,7 @@ import {
 import { Visibility, VisibilityOff, CheckCircle, Cancel } from '@mui/icons-material';
 import EventIcon from '@mui/icons-material/Event';
 
-// API Service
+// API Service - Live Backend URL
 const API_BASE = 'https://eventrentalsbooking.onrender.com/api';
 
 const apiService = {
@@ -106,7 +106,7 @@ const Register = () => {
     return emailRegex.test(email);
   };
 
-  // Updated handleSubmit with MongoDB API
+  // ✅ UPDATED handleSubmit with Correct Key ('mobile')
   const handleSubmit = async (event) => {
     event.preventDefault();
     setError('');
@@ -148,12 +148,12 @@ const Register = () => {
     }
 
     try {
-      // ✅ MONGODB API CALL - Replace localStorage
+      // ✅ FIX APPLIED HERE: Sending 'mobile' instead of 'phone'
       const result = await apiService.register({
         name: fullName,
         email: email.toLowerCase(),
         password: password,
-        phone: phone
+        mobile: phone // <--- Backend expects 'mobile'
       });
 
       if (result.success) {
