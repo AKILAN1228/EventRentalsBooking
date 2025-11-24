@@ -1,32 +1,19 @@
-const express = require('express');
-const router = express.Router();
-const User = require('../models/User.js'); // User Model Import
+const User = require('../models/User');
 const jwt = require('jsonwebtoken');
 
 // ✅ GENERATE JWT TOKEN
 const generateToken = (userId) => {
-  // Render-ல் Secret Key செட் செய்யவில்லை என்றால் Default Key எடுக்கும்
+  // Render-ல் JWT_SECRET செட் செய்யவில்லை என்றால் Default key எடுக்கும்
   const secret = process.env.JWT_SECRET || 'mysecretkey123'; 
   return jwt.sign({ userId }, secret, { expiresIn: '30d' });
 };
 
-// ==============================
-// ✅ 1. USER REGISTRATION ROUTE
-// ==============================
-router.post('/register', async (req, res) => {
+// ✅ REGISTER USER LOGIC
+const registerUser = async (req, res) => {
   try {
-    // முக்கிய மாற்றம்: 'phone' என்பதற்கு பதில் 'mobile' என்று மாற்றப்பட்டுள்ளது
     const { name, email, password, mobile } = req.body;
 
-    // 1. Check if all fields are present
-    if (!name || !email || !password || !mobile) {
-      return res.status(400).json({ 
-        success: false, 
-        message: 'Please fill in all fields' 
-      });
-    }
-
-    // 2. Check if user already exists
+    // 1. Check if user exists
     const userExists = await User.findOne({ email: email.toLowerCase() });
     if (userExists) {
       return res.status(400).json({ 
@@ -35,19 +22,18 @@ router.post('/register', async (req, res) => {
       });
     }
 
-    // 3. Create user (Password hashing happens automatically in User Model)
+    // 2. Create User (Password hashed automatically in User Model)
     const user = await User.create({
       name,
       email: email.toLowerCase(),
       password,
-      mobile, // ✅ Correct Field Name matched with User.js
+      mobile, // Mobile field correctly mapped
       isAdmin: email === 'admin@eventrentals.com' // Admin Logic
     });
 
-    // 4. Generate token
+    // 3. Generate Token
     const token = generateToken(user._id);
 
-    // 5. Send Success Response
     res.status(201).json({
       success: true,
       message: 'User registered successfully!',
@@ -70,19 +56,17 @@ router.post('/register', async (req, res) => {
       error: error.message 
     });
   }
-});
+};
 
-// ==============================
-// ✅ 2. USER LOGIN ROUTE
-// ==============================
-router.post('/login', async (req, res) => {
+// ✅ LOGIN USER LOGIC
+const loginUser = async (req, res) => {
   try {
     const { email, password } = req.body;
 
-    // 1. Check if user exists
+    // 1. Find User
     const user = await User.findOne({ email: email.toLowerCase() });
 
-    // 2. Check Password (using matchPassword method from User Model)
+    // 2. Check Password
     if (user && (await user.matchPassword(password))) {
       const token = generateToken(user._id);
 
@@ -93,7 +77,7 @@ router.post('/login', async (req, res) => {
           _id: user._id,
           name: user.name,
           email: user.email,
-          mobile: user.mobile, // ✅ Return correct mobile field
+          mobile: user.mobile,
           isAdmin: user.isAdmin
         },
         token, 
@@ -113,6 +97,6 @@ router.post('/login', async (req, res) => {
       error: error.message
     });
   }
-});
+};
 
-module.exports = router;
+module.exports = { registerUser, loginUser };
